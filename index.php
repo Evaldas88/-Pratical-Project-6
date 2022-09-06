@@ -13,39 +13,97 @@
 
 <body>
     <?php
+
     // READ files and directories
     $path = isset($_GET["path"]) ? './' . $_GET["path"] : './';
     $doc = scandir($path);
 
-    // print('<h2>Current directory: ' . str_replace('?path=/', '', $_SERVER['REQUEST_URI']) . '</h2>');  show current directory path
-    print('<div class="container pt-5"><table class="table  table-striped table-active" style="width:80%; margin:auto; border-radius: 10%; border: 1px solid black">
-    <th style="width: 40%; text-align: center; border: 1px solid black;">Name</th>
-    <th style="width: 30%; text-align: center; border: 1px solid black;">Type</th>
-    <th style="width: 30%; text-align: center; border: 1px solid black;">Actions</th>');
+    print('<div class="container pt-5 ">
+    <h1 class="text-center">PHP File Manager</h1>
+    <table class="table  table-bordered mt-5 text-center" >
+    <th class="table-success" >Name</th>
+    <th class="table-success">Type</th>
+    <th class="table-success">Actions</th>');
     foreach ($doc as $fnd) {
         if ($fnd != ".." and $fnd != ".") {
             print('<tr>');
-            print('<td style="width: 40%; text-align: center; border: 1px solid black;">' . (is_dir($path . $fnd) ? "Directory" : "File") . '</td>');
-            print('<td style="width: 40%; text-align: center; border: 1px solid black;">' . (is_dir($path . $fnd)
+            print('<td >' . (is_dir($path . $fnd) ? "Directory" : "File") . '</td>');
+            print('<td >' . (is_dir($path . $fnd)
                 ? '<a href="' . (isset($_GET['path'])
                     ? $_SERVER['REQUEST_URI'] . $fnd . '/'
                     : $_SERVER['REQUEST_URI'] . '?path=' . $fnd . '/') . '">' . $fnd . '</a>'
                 : $fnd)
                 . '</td>');
-            print('<td><form method="post">
-            <button  class=" btn btn-primary" type ="submit" name="delete" >
-            Delete</button>
-
-                 </form></td>');
+            if (is_dir($path . $fnd) != "Directory") {
+                print('<td class="text-center">
+                    <form  action="" method="post">
+                    <div class="button">
+                        <input type="hidden" name="delete" value=' . str_replace(' ', '&nbsp;', $fnd) . '>
+                        <input class="btn btn-outline-danger" type="submit" value="Delete">
+                    </div>
+                    </form></td>');
+            } else {
+                print('<td></td>');
+            }
             print('</tr>');
         }
     }
-    print('</table></div>');
+    print('</table>');
+    if ($path != "./") {
+        print('<div class=" pt-5">
+        <form action="" method="post">
+        <input class ="btn btn-outline-secondary" type="submit" name="back" value=' . str_replace(' ', '&nbsp;', 'Back') . '>
+        </form>');
+    }
+    print('<div class= "mt-5">
+        <form method="POST">
+        <input placeholder="Enter folder name" name="folder" type="text">
+        <button type="submit" class="btn btn-outline-secondary ";>Create new folder</button>
+        </form></div>');
+    ('</div>');
 
+
+
+    // Get back  statment logic
+
+    if (isset($_POST['back'])) {
+        header("Location:" . (dirname($_SERVER['REQUEST_URI'])) . '/');
+    }
+
+
+    // File delete logic
+
+    if (isset($_POST['delete'])) {
+        $delete = $_POST['delete'];
+
+        if ($delete !== "index.php" and $delete !== "README.md") {
+            $modifiedDelete = preg_replace('/\s/u', ' ', $delete);
+            unlink($path . $modifiedDelete);
+            header("Refresh:0");
+        } else {
+            print('<h2 class="text-center text-danger mt-5">Cannot delete README or index files</h2>');
+            header("Refresh:2");
+        }
+    }
+
+    //Create new folder logic
+
+    if (isset($_POST['folder'])) {
+        $foldername = $_POST['folder'];
+        if (isset($_GET['path'])) {
+            $path_n = $_GET['path'];
+            $path = './' . $path_n;
+        }
+        if (!file_exists($path . $foldername)) {
+            @mkdir($path . $foldername, 0777, true);
+            header("refresh: 0");
+        } else if (isset($_POST['folder']) and file_exists("./" . $_POST['folder'])) {
+            print('<h2 class="text-center text-danger mt-5">Directory "' . $_POST['folder'] . '" already exists </h2>');
+        }
+    }
 
 
     ?>
-
 </body>
 
 </html>
