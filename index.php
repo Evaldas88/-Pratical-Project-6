@@ -71,36 +71,6 @@
     }
 
 
-    // File delete logic
-
-    if (isset($_POST['delete'])) {
-        $delete = $_POST['delete'];
-
-        if ($delete !== "index.php" and $delete !== "README.md") {
-            $modifiedDelete = preg_replace('/\s/u', ' ', $delete);
-            unlink($path . $modifiedDelete);
-            header("Refresh:0");
-        } else {
-            print('<h2 class="text-center text-danger mt-5">Cannot delete README or index files</h2>');
-            header("Refresh:2");
-        }
-    }
-
-    //Create new folder logic
-
-    if (isset($_POST['folder'])) {
-        $foldername = $_POST['folder'];
-        if (isset($_GET['path'])) {
-            $path_n = $_GET['path'];
-            $path = './' . $path_n;
-        }
-        if (!file_exists($path . $foldername)) {
-            @mkdir($path . $foldername, 0777, true);
-            header("refresh: 0");
-        } else if (isset($_POST['folder']) and file_exists("./" . $_POST['folder'])) {
-            print('<h2 class="text-center text-danger mt-5">Directory "' . $_POST['folder'] . '" already exists </h2>');
-        }
-    }
 
 
     ?>
