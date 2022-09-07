@@ -5,21 +5,20 @@ session_start();
 if (isset($_POST['logout'])) {
     session_destroy();
     session_start();
-    print('Logged out!');
-
     header('Location: ' . $_SERVER['PHP_SELF']);
+
 }
-    // login logic
-    $loginMsg = '';
-    if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['password'])) {
-        if ($_POST['username'] == 'test' && $_POST['password'] == 'test') {
-            $_SESSION['logged_in'] = true;
-            $_SESSION['timeout'] = time();
-            $_SESSION['username'] = $_POST['username'];
-        } else {
-            $loginMsg = 'Failed to login: wrong username and/or password!';
-        }
+// login logic
+$loginMsg = '';
+if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['password'])) {
+    if ($_POST['username'] == 'test' && $_POST['password'] == 'test') {
+        $_SESSION['logged_in'] = true;
+        $_SESSION['timeout'] = time();
+        $_SESSION['username'] = $_POST['username'];
+    } else {
+        $loginMsg = 'Failed to login: wrong username and/or password!';
     }
+}
 ?>
 
 <!DOCTYPE html>
@@ -76,14 +75,14 @@ if (isset($_POST['logout'])) {
         print('</table>');
 
         // print back button
-        if ($path != "./") { 
+        if ($path != "./") {
             print('<div class=" pt-5">
                     <form action="" method="post">
                         <input class ="btn btn-outline-secondary" type="submit" name="back" value=' . str_replace(' ', '&nbsp;', 'Back') . '>
                     </form>');
         }
 
-         // print create folder input and button
+        // print create folder input and button
         print('<div class= "mt-5"> 
                     <form method="POST">
                         <input placeholder="Enter folder name" name="folder" type="text">
@@ -136,21 +135,26 @@ if (isset($_POST['logout'])) {
     <!-- login form -->
 
     <div class=" container ">
+
         <div class="position-absolute top-50 start-50 translate-middle">
-            <form action="" method="post" <?php isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true ? print("style = \"display: none\"") : print("style = \"display: block\"") ?>>
+            <div class="p-1">
+                <h5 class="text-danger"><?php print $loginMsg; ?></h5>
+            </div>
+            <form  class="text-center mt-" action="" method="post" <?php isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true ? print("style = \"display: none\"") : print("style = \"display: block\"") ?>>
                 <input type="text" name="username" placeholder="username = test" required autofocus></br>
                 <input type="password" name="password" placeholder="password = test" required>
-            <div class="text-center mt-1">
-                <button class="btn btn-outline-secondary" type="submit" name="login">Login</button>
-            </div>
+                <div class="text-center mt-1">
+                    <button class="btn btn-outline-secondary" type="submit" name="login">Login</button>
+                </div>
             </form>
-
-            <!-- logout form only show ,when we  are logged-in -->
         </div>
-        <form action="" method="post" <?php isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true ? print("style = \"display: block\"") : print("style = \"display: none\"") ?>>
-            <div class="text-center mt-5">
-                <button class="btn btn-outline-secondary" type='submit' name='logout' value='Logout'> logout </button>
-            </div>
+    </div>
+
+    <!-- logout form only show ,when we  are logged-in -->
+    <form action="" method="post" <?php isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true ? print("style = \"display: block\"") : print("style = \"display: none\"") ?>>
+        <div class="text-center mt-5">
+            <button class="btn btn-outline-secondary" type='submit' name='logout' value='Logout'> logout </button>
+        </div>
 </body>
 
 </html>
