@@ -35,7 +35,7 @@ This project was created with :
 * Open your browser and in the searchbar type in:
 	* localhost/(your folder name)
 
-* Author
+# Author
 
 This project was developed by  - Evaldas Skackauskas 
 
