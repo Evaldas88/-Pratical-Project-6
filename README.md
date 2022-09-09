@@ -11,7 +11,7 @@ This project was created with :
 * See all files and folders,
 * Delete files,
 * Download files,
-* Create ne directory`s/folder`s.
+* Create new directory.
 
 #  Screenshots
 
