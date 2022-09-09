@@ -27,7 +27,7 @@ This project was created with :
 * Open new folder with Visual Studio Code
 * Open terminal and paste this:
 
-<pre>git clone  https://github.com/Evaldas88/File-manager-PHP.git</pre>
+            git clone  https://github.com/Evaldas88/File-manager-PHP.git    
 
 * Run XAMPP and start Apache server.
 * Open your browser and in the searchbar type in:
