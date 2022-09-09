@@ -5,9 +5,11 @@ This project was created with :
 * PHP
 * Bootstrap
 
-# In this File Browser System you can:
+# In this File Browser  you can:
 
 * Login/logout,
+    * username - test
+    * password - test
 * See all files and folders,
 * Delete files,
 * Download files,
@@ -32,3 +34,9 @@ This project was created with :
 * Run XAMPP and start Apache server.
 * Open your browser and in the searchbar type in:
 	* localhost/(your folder name)
+
+* Author
+
+This project was developed by  - Evaldas Skackauskas 
+
+<a href="https://www.linkedin.com/in/evaldas-skackauskas-35505516a/">linkedin</a>
