@@ -28,7 +28,7 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
 $msg = '';
 if (isset($_POST['delete'])) {
     $delete = $_POST['delete'];
-    if ($delete !== "index.php" and $delete !== "README.md" and $delete !== "login.php") {
+    if ($delete !== "index.php" and $delete !== "README.md" and $delete !== "image1.png" and $delete !== "image2.png") {
         $modifiedDelete = preg_replace('/\s/u', ' ', $delete);
         unlink($path . $modifiedDelete);
         header("Refresh:0");
