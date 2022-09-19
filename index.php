@@ -93,8 +93,6 @@ if (isset($_FILES['image'])) {
     }
     if (empty($error) == true) {
         move_uploaded_file($file_tmp, $path . $file_name);
-        header("refresh:2");
-
     } 
 }
 
